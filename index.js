@@ -8,7 +8,7 @@ const url = "";
 const client = new MongoClient(url);
 
 // Database Name
-const dbName = 'sample_restaurants';
+const dbName = '';
 
 async function main() {
   // Use connect method to connect to the server
@@ -24,14 +24,14 @@ async function main() {
 async function getAllRestaurants(){
   await client.connect();
   const db = client.db(dbName);
-  const collection = db.collection('restaurants');
+  const collection = db.collection('');
   const findResult = await collection.find({}).toArray();
   console.log('Found documents =>', findResult);
 }
 async function getAllNeighborhoods() {
   await client.connect();
   const db = client.db(dbName);
-  const collection = db.collection('neighborhoods');
+  const collection = db.collection('');
   const findResult = await collection.find({}).toArray();
   console.log('Found documents =>', findResult);
   
@@ -39,7 +39,7 @@ async function getAllNeighborhoods() {
 async function addRestaurant(data) {
   await client.connect();
   const db = client.db(dbName);
-  const collection = db.collection('restaurants');
+  const collection = db.collection('');
   const findResult = await collection.insertOne(data)
   console.log('Found documents =>', findResult);
 }
@@ -47,7 +47,7 @@ async function addRestaurant(data) {
 async function addNeighborhood(data) {
   await client.connect();
   const db = client.db(dbName);
-  const collection = db.collection('neighborhoods');
+  const collection = db.collection('');
   const findResult = await collection.insertOne(data)
   console.log('Found documents =>', findResult);
 }
