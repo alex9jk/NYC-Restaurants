@@ -1,10 +1,8 @@
 import React,{useEffect,useState} from 'react';
 import Map from './components/map/map';
-const location = {
-  address: '1600 Amphitheatre Parkway, Mountain View, california.',
-  lat: 37.42216,
-  lng: -122.08427,
-}
+import ButtonAppBar from './components/ButtonAppBar';
+import PermanentDrawerLeft from './components/Drawer';
+
 function App() {
   const [dataB, setData] = useState([]);
   // useEffect(()=>{
@@ -23,14 +21,15 @@ function App() {
 
   // },[])
   return (
-    <div>
-      <Map location={location} zoomLevel={17}/>
-    </div>
-    // <div>
-    //   {(typeof dataB ==='undefined') ? (<p>Loading...</p>): (<p>{dataB[0].cuisine}</p>)}
-
-    // </div>
+    <>
+    <ButtonAppBar/>
+    <PermanentDrawerLeft />
+    {/* <div>
+      <Map location={location} zoomLevel={10}/>
+    </div> */}
+    </>
   )
+
 }
 
 export default App;
