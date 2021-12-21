@@ -20,6 +20,8 @@ const corsOptions ={
 }
 app.use(cors(corsOptions)) // Use this after the variable declaration
 
+const locations = require("./locations")
+
 async function geoQueries(){
   await client.connect();
   const db = client.db(dbName);
@@ -39,17 +41,17 @@ async function geoQueries(){
   //db.restaurants.find( { location: { $geoWithin: { $geometry: neighborhood.geometry } } } ).count()
 }
 
-// app.get('/geo', function(req,res) {
-//   geoQueries()
-//   .then((data) => {
-//     res.set('Content-Type', 'application/json');
-//     res.set('charset','utf-8');
-//     //res.json(data);
+app.get('/geo', function(req,res) {
+  geoQueries()
+  .then((data) => {
+    res.set('Content-Type', 'application/json');
+    res.set('charset','utf-8');
+    //res.json(data);
   
-//   })
-//   .catch(console.error)
-//   .finally(() => client.close());
-// })
+  })
+  .catch(console.error)
+  .finally(() => client.close());
+})
  async function apiCall(type,collect,data,id){
   
   await client.connect();
@@ -119,6 +121,36 @@ app.get('/restaurants', function(req, res) {
   .finally(() => client.close());
 });
 
+app.get('/:man', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.set('charset','utf-8');
+  res.json(locations.manhattanCoords);
+})
+app.get('/man', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.set('charset','utf-8');
+  res.json(locations.manhattanCoords);
+})
+app.get('/brook', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.set('charset','utf-8');
+  res.json(locations.brooklynCoords);
+})
+app.get('/queens', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.set('charset','utf-8');
+  res.json(locations.queensCoords);
+})
+app.get('/bronx', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.set('charset','utf-8');
+  res.json(locations.bronxCoords);
+})
+app.get('/stat', function(req, res) {
+  res.set('Content-Type', 'application/json');
+  res.set('charset','utf-8');
+  res.json(locations.statenIslandCoords);
+})
 app.listen(port, function() {
   console.log(`Example app listening on port ${port}!`)
 });
