@@ -41,7 +41,7 @@ async function geoQueries(){
   //db.restaurants.find( { location: { $geoWithin: { $geometry: neighborhood.geometry } } } ).count()
 }
 
-app.get('/geo', function(req,res) {
+app.get('/geo/:coords', function(req,res) {
   geoQueries()
   .then((data) => {
     res.set('Content-Type', 'application/json');
@@ -121,30 +121,31 @@ app.get('/restaurants', function(req, res) {
   .finally(() => client.close());
 });
 
-app.get('/:man', function(req, res) {
-  res.set('Content-Type', 'application/json');
-  res.set('charset','utf-8');
-  res.json(locations.manhattanCoords);
-})
+// app.get('/:man', function(req, res) {
+//   res.set('Content-Type', 'application/json');
+//   res.set('charset','utf-8');
+//   res.json(locations.manhattanCoords);
+// });
 app.get('/man', function(req, res) {
   res.set('Content-Type', 'application/json');
   res.set('charset','utf-8');
   res.json(locations.manhattanCoords);
-})
+});
 app.get('/brook', function(req, res) {
   res.set('Content-Type', 'application/json');
   res.set('charset','utf-8');
   res.json(locations.brooklynCoords);
-})
+});
 app.get('/queens', function(req, res) {
   res.set('Content-Type', 'application/json');
   res.set('charset','utf-8');
   res.json(locations.queensCoords);
-})
+});
 app.get('/bronx', function(req, res) {
+  console.log(locations.bronxCoords)
   res.set('Content-Type', 'application/json');
   res.set('charset','utf-8');
-  res.json(locations.bronxCoords);
+  res.json({lat: 40.84097055779349, long: -73.85258970014426});
 })
 app.get('/stat', function(req, res) {
   res.set('Content-Type', 'application/json');

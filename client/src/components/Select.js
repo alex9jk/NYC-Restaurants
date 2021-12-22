@@ -9,6 +9,7 @@ export default function BasicSelect({burough,setBurough}) {
   // const [age, setAge] = useState('');
 
   const handleChange = (event) => {
+    console.log("event>>>>", event.target.value)
     setBurough(event.target.value);
   };
 
