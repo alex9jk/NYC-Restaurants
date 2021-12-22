@@ -33,45 +33,40 @@ export default function PermanentDrawerLeft() {
   const navigate = useNavigate();
   
 
-  useEffect(()=>{
-    if(event != null) {
-      fetch(`http://localhost:5000/${bur}`)
-      .then(response => 
-          //console.log(response.json())
+//   useEffect(()=>{
+//     if(event != null) {
+//       console.log(">>>bur",bur);
+//       fetch(`http://localhost:5000/${bur}`)
+//       .then(response => 
+//           //console.log(response.json())
+//         response.json())
+//       .then(data =>{
+//             console.log(">>>",data)
+//            setCoords(data)
+//            setEvent(null)
+          
+//           }
+           
+//            )
+//     }
+
+// },[bur,event])
+  const handleOnClick = (e) => {
+    console.log("BUR in onclick", bur)
+    fetch(`http://localhost:5000/${bur}`)
+       .then(response => 
+         //console.log(response.json()))
         response.json())
       .then(data =>{
             console.log(">>>",data)
            setCoords(data)
-           setEvent(null)
-          
-          }
-           
-           )
-    }
-
-},[bur,event])
-  const handleOnClick = (e) => {
-    console.log(e);
-    setEvent(e);
-    
-
-
+      })
     }
 
   
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      {/* <AppBar
-        position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-      >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div">
-            Permanent drawer
-          </Typography>
-        </Toolbar>
-      </AppBar> */}
       <Drawer
         sx={{
           width: drawerWidth,
@@ -87,34 +82,12 @@ export default function PermanentDrawerLeft() {
         <Toolbar />
         
         <BasicSelect burough={bur} setBurough={setBur}/>
-        <Button variant="outlined" size='medium' onClick= {handleOnClick}>Search</Button>
-        {/* <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List> */}
+        <Button variant="outlined" size='medium' onClick= {async () =>{await handleOnClick()}}>Search</Button>
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
-      >
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
+          {console.log("COORDS",coords)}
         <Map location={location} zoomLevel={10} coords={coords}/>
       </Box>
     </Box>
