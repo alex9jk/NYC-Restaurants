@@ -22,12 +22,13 @@ app.use(cors(corsOptions)) // Use this after the variable declaration
 
 const locations = require("./locations")
 
-async function geoQueries(){
+async function geoQueries(lat,long){
   await client.connect();
   const db = client.db(dbName);
   const collection = db.collection('neighborhoods')
-  var neighborhood = await collection.findOne( { geometry: { $geoIntersects: { $geometry: { type: "Point", coordinates: [ -73.960813, 40.642772] } } } } )
-  // console.log(neighborhood);
+  var neighborhood = await collection.findOne( { geometry: { $geoIntersects: { $geometry: { type: "Point", coordinates: [ parseFloat(long), parseFloat(lat)] } } } } )
+   console.log("lat",lat);
+   console.log("long",long);
   const coll = db.collection("restaurants")
   try {
     var countOfRestaurants = await coll.find( { "address.coord" : { $geoWithin: {$geometry: neighborhood.geometry} }  }).toArray()
@@ -37,20 +38,22 @@ async function geoQueries(){
     console.error(err);
   }
   
-  console.log(countOfRestaurants);
+  return countOfRestaurants;
   //db.restaurants.find( { location: { $geoWithin: { $geometry: neighborhood.geometry } } } ).count()
 }
 
-app.get('/geo/:coords', function(req,res) {
-  geoQueries()
+app.get('/geo', function(req,res) {
+  console.log(">>lat",req.query.lat)
+   geoQueries(req.query.lat,req.query.long)
   .then((data) => {
+    console.log(data)
     res.set('Content-Type', 'application/json');
     res.set('charset','utf-8');
-    //res.json(data);
+    res.json(data);
   
   })
-  .catch(console.error)
-  .finally(() => client.close());
+ .catch(console.error)
+ .finally(() => client.close());
 })
  async function apiCall(type,collect,data,id){
   

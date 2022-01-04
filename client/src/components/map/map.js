@@ -3,8 +3,9 @@ import GoogleMapReact from 'google-map-react';
 import './map.css'
 import CircularIndeterminate from '../utils/Spinner';
 import LocationPin from './Pin';
+import RestPin from './RestPin';
 
-const Map = ({ location, zoomLevel, coords }) => {
+const Map = ({ location,restData, zoomLevel, coords }) => {
   const [keyFob,setKey] = useState('');
   useEffect(() =>{
       fetch("http://localhost:5000/key")
@@ -34,6 +35,12 @@ const Map = ({ location, zoomLevel, coords }) => {
         lng={coords?.long}
         // text={location.address}
       /> 
+
+      {restData.map(ele => {
+        console.log("<<<<<",ele.address.coord[1])
+        console.log("<<<<<",ele.address.coord[0])
+        return <RestPin lat={ele?.address?.coord[1]} lng={ele?.address?.coord[0]}/>
+      })}
     </GoogleMapReact>
       :
       <CircularIndeterminate/>
