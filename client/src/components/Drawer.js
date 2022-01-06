@@ -2,21 +2,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Button from '@mui/material/Button';
 import Map from './map/map';
 import BasicSelect from './Select';
-import { useNavigate } from 'react-router-dom';
 import {useState,useEffect, useMemo} from 'react';
+
 
 const location = {
   address: '1600 Amphitheatre Parkway, Mountain View, california.',
@@ -29,9 +20,8 @@ const drawerWidth = 400;
 export default function PermanentDrawerLeft() {
   const [bur, setBur] = useState('');
   const [coords,setCoords]= useState(null);
-  const [event,setEvent] =useState(null)
-  const navigate = useNavigate();
-  
+  const [restData,setRestData] = useState([]);
+
 
 //   useEffect(()=>{
 //     if(event != null) {
@@ -51,7 +41,10 @@ export default function PermanentDrawerLeft() {
 //     }
 
 // },[bur,event])
+
   const handleOnClick = (e) => {
+    e.preventDefault()
+    setRestData([]);
     console.log("BUR in onclick", bur)
     fetch(`http://localhost:5000/${bur}`)
        .then(response => 
@@ -60,7 +53,23 @@ export default function PermanentDrawerLeft() {
       .then(data =>{
             console.log(">>>",data)
            setCoords(data)
+           fetch(`http://localhost:5000/geo?lat=${data.lat}&long=${data.long}`,
+           {
+             headers: {
+               "Access-Control-Allow-Origin": "*"
+             }
+           })
+           .then(response=> response.json())
+           .then(data =>{
+             setRestData(data)
+           })
+           .catch(error => {
+            console.error('Error:', error);
+          });
       })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     }
 
   
@@ -82,13 +91,13 @@ export default function PermanentDrawerLeft() {
         <Toolbar />
         
         <BasicSelect burough={bur} setBurough={setBur}/>
-        <Button variant="outlined" size='medium' onClick= {async () =>{await handleOnClick()}}>Search</Button>
+        <Button variant="outlined" size='medium' onClick= {async (e) =>{await handleOnClick(e)}}>Search</Button>
       </Drawer>
       <Box
         component="main"
         sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
-          {console.log("COORDS",coords)}
-        <Map location={location} zoomLevel={10} coords={coords}/>
+          
+        <Map location={location} restData={restData} zoomLevel={10} coords={coords}/>
       </Box>
     </Box>
   );
