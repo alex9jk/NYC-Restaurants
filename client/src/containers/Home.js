@@ -1,9 +1,7 @@
 import React,{useEffect,useState} from 'react';
-import Map from './components/map/map';
-import ButtonAppBar from './components/ButtonAppBar';
-import PermanentDrawerLeft from './components/Drawer';
-
-function App() {
+import ButtonAppBar from '../components/ButtonAppBar';
+import {Outlet} from "react-router-dom";
+function Home() {
   const [dataB, setData] = useState([]);
   // useEffect(()=>{
   //   try {
@@ -21,14 +19,13 @@ function App() {
 
   // },[])
   return (
-    <>
-    <PermanentDrawerLeft />
-    {/* <div>
-      <Map location={location} zoomLevel={10}/>
-    </div> */}
-    </>
+      <>
+        <ButtonAppBar/>
+        <Outlet/>
+      </>
+
   )
 
 }
 
-export default App;
+export default Home;
