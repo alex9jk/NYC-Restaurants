@@ -7,8 +7,9 @@ import Button from '@mui/material/Button';
 import Map from './map/map';
 import BasicSelect from './Select';
 import {useState,useEffect, useMemo} from 'react';
-
-
+import RestCard from './Card';
+import BasicList from './List';
+import CircularIndeterminate from './utils/Spinner';
 const location = {
   address: '1600 Amphitheatre Parkway, Mountain View, california.',
   lat: 40.695067,
@@ -18,13 +19,27 @@ const location = {
 const drawerWidth = 400;
 
 export default function PermanentDrawerLeft() {
-  const [bur, setBur] = useState('');
+  const [bur, setBur] = useState('man');
   const [coords,setCoords]= useState(null);
   const [restData,setRestData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+useEffect(() =>{
+  setLoading(true)
+  setCoords(null)
+    fetch(`http://localhost:5000/${bur}`)
+    .then(response => response.json())
+    .then(data =>{
+      console.log("coordinates>>>", data)
+      setCoords(data)
+      setLoading(false)
+      })
 
+  
+
+},[bur])
 //   useEffect(()=>{
-//     if(event != null) {
+//     
 //       console.log(">>>bur",bur);
 //       fetch(`http://localhost:5000/${bur}`)
 //       .then(response => 
@@ -38,47 +53,56 @@ export default function PermanentDrawerLeft() {
 //           }
            
 //            )
-//     }
+//     
 
 // },[bur,event])
 
   const handleOnClick = (e) => {
     e.preventDefault()
     setRestData([]);
-    console.log("BUR in onclick", bur)
-    fetch(`http://localhost:5000/${bur}`)
-       .then(response => 
-         //console.log(response.json()))
-        response.json())
+    
+    setLoading(true);
+    fetch(`http://localhost:5000/geo?lat=${coords.lat}&long=${coords.long}`,{headers: {"Access-Control-Allow-Origin": "*"}})
+      .then(response=> response.json())
       .then(data =>{
-            console.log(">>>",data)
-           setCoords(data)
-           fetch(`http://localhost:5000/geo?lat=${data.lat}&long=${data.long}`,
-           {
-             headers: {
-               "Access-Control-Allow-Origin": "*"
-             }
-           })
-           .then(response=> response.json())
-           .then(data =>{
-             setRestData(data)
-           })
-           .catch(error => {
-            console.error('Error:', error);
-          });
+        console.log("restaurant data>>>",data);
+        setRestData(data);
+        setLoading(false);
       })
       .catch(error => {
         console.error('Error:', error);
       });
+    
+
+    // console.log("BUR in onclick", bur)
+    // fetch(`http://localhost:5000/${bur}`)
+    // .then(response => response.json())
+    // .then(data =>{
+    //   setCoords(data)
+    //   fetch(`http://localhost:5000/geo?lat=${data.lat}&long=${data.long}`,{headers: {"Access-Control-Allow-Origin": "*"}})
+    //   .then(response=> response.json())
+    //   .then(data =>{
+    //     setRestData(data)
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //   });
     }
 
   
   return (
+    loading ? <CircularIndeterminate/>
+    :
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Drawer
         sx={{
           width: drawerWidth,
+          height: 10,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
@@ -89,9 +113,16 @@ export default function PermanentDrawerLeft() {
         anchor="left"
       >
         <Toolbar />
-        
-        <BasicSelect burough={bur} setBurough={setBur}/>
-        <Button variant="outlined" size='medium' onClick= {async (e) =>{await handleOnClick(e)}}>Search</Button>
+        <div>
+          <BasicSelect burough={bur} setBurough={setBur}/>
+        <Button variant="outlined" size='medium' sx={{width:"5rem"}}onClick= {async (e) =>{await handleOnClick(e)}}>Search</Button>
+
+        </div>
+
+        {
+          restData?.map(ele => {
+            return <BasicList name={ele?.name} cuisine={ele?.cuisine} address={ele?.address} grades={ele?.grades}/>
+            })}
       </Drawer>
       <Box
         component="main"

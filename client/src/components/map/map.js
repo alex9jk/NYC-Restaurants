@@ -13,6 +13,7 @@ const Map = ({ location,restData, zoomLevel, coords }) => {
         //console.log(response.json())
       response.json())
     .then(data =>{
+      
           console.log(">>>",data.key)
          setKey(data.key)})
   },[])
@@ -35,11 +36,9 @@ const Map = ({ location,restData, zoomLevel, coords }) => {
         lng={coords?.long}
         // text={location.address}
       /> 
-
+      
       {restData.map(ele => {
-        console.log("<<<<<",ele.address.coord[1])
-        console.log("<<<<<",ele.address.coord[0])
-        return <RestPin lat={ele?.address?.coord[1]} lng={ele?.address?.coord[0]}/>
+        return <RestPin text={ele?.name}lat={ele?.address?.coord[1]} lng={ele?.address?.coord[0]}/>
       })}
     </GoogleMapReact>
       :
