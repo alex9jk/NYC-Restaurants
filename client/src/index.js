@@ -5,16 +5,29 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes,Route,Link } from "react-router-dom";
 import Home from "./containers/Home";
-
+import PrivateRoute from "./PrivateRoute"
+import Landing from "./containers/Landing"
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home/>}>
-          <Route path="map" element={<App />}/>
+        <Route path="/" element={<Home/>} />
+        <Route path="/home" element={<Landing/>}>
 
         </Route>
-       
+        <Route path="/map"
+          element={
+            <PrivateRoute>
+              <App />
+            </PrivateRoute>
+          } />
+        {/* <Route path="/" element={<Home/>}></Route> */}
+      {/* <Route exact path='/' element={<PrivateRoute/>}>
+            <Route exact path='/' element={<Home/>}/>
+      </Route> */}
+        {/* <Route path="/" element={<Home/>}></Route>
+        <Route path="/map" > */}
+        
       </Routes>
     
     </BrowserRouter>

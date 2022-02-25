@@ -22,6 +22,7 @@ function App() {
   // },[])
   return (
     <>
+    <ButtonAppBar/>
     <PermanentDrawerLeft />
     {/* <div>
       <Map location={location} zoomLevel={10}/>
