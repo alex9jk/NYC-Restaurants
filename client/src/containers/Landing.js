@@ -6,7 +6,7 @@ import { Amplify } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from '../aws-exports';
 Amplify.configure(awsExports);
-function Home() {
+function Landing({signOut, user}) {
   const [dataB, setData] = useState([]);
   // useEffect(()=>{
   //   try {
@@ -25,14 +25,22 @@ function Home() {
   // },[])
   return (
       <>
-        <ButtonAppBar style={{marginBottom:"10rem"}}/>
-        
-        <Authenticator className="auth" >
+        <ButtonAppBar/>
+        <Authenticator>
+        {({ signOut, user }) => (
+        <main>
+          <h1>Hello {user.username}</h1>
+          <button onClick={signOut}>Sign out</button>
+        </main>
+      )}
         </Authenticator>
+
+        
+ 
       </>
 
   )
 
 }
 
-export default Home;
+export default Landing;

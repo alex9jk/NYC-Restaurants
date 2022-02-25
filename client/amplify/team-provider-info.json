@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-nyc-dev-95807-authRole",
+      "UnauthRoleArn": "arn:aws:iam::534025478232:role/amplify-nyc-dev-95807-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::534025478232:role/amplify-nyc-dev-95807-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-nyc-dev-95807-deployment",
+      "UnauthRoleName": "amplify-nyc-dev-95807-unauthRole",
+      "StackName": "amplify-nyc-dev-95807",
+      "StackId": "arn:aws:cloudformation:us-east-1:534025478232:stack/amplify-nyc-dev-95807/05f1f4c0-9002-11ec-b854-0e8a3c442c39",
+      "AmplifyAppId": "d357oabri7s0ig"
+    },
+    "categories": {
+      "auth": {
+        "nycf81c6389": {}
+      }
+    }
+  }
+}
