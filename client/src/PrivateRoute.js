@@ -27,7 +27,7 @@ const PrivateRoute = ({ children, ...rest }) => {
   }
   return (
       signInUser ? <App/>
-      : <Navigate to="/home"/>
+      : <Navigate to="/"/>
         // : <Navigate to={{
         //              pathname: '/map',
                      
