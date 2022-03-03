@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height:"100%";
 }
 
 code {
@@ -16,4 +17,7 @@ code {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+#root {
+  height:1000px
 }

@@ -32,7 +32,7 @@ export default function Nav() {
               horizontal: 'center',
             }}
         >
-        <MenuItem onClick={handleClose}><Link to="/home">Home</Link></MenuItem>
+        <MenuItem onClick={handleClose}><Link to="/">Home</Link></MenuItem>
         <MenuItem onClick={handleClose}><Link to="/map">Map</Link></MenuItem>
         <MenuItem onClick={handleClose}>restaurants</MenuItem>
         <MenuItem onClick={handleClose}>Neighborhoods</MenuItem>

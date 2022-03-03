@@ -7,14 +7,16 @@ import { BrowserRouter, Routes,Route,Link } from "react-router-dom";
 import Home from "./containers/Home";
 import PrivateRoute from "./PrivateRoute"
 import Landing from "./containers/Landing"
+import ImageCarousel from "./components/utils/ImageCarousel";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/home" element={<Landing/>}>
-
-        </Route>
+        <Route path="/" element={<Landing/>} />
+        {/* <Route path="/home" element={<Home/>}>
+        
+        </Route> */}
+        <Route path="/restaurants" element= {<ImageCarousel />} />
         <Route path="/map"
           element={
             <PrivateRoute>

@@ -9,7 +9,7 @@ import Nav from "./Menu";
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar style={{position:"relative",zIndex:1400}}>
+      <AppBar style={{position:"relative",zIndex:1400,backgroundColor:"green"}}>
         <Toolbar>
           <Nav/>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

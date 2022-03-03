@@ -5,7 +5,25 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import { Amplify } from 'aws-amplify';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from '../aws-exports';
+import styled from '@emotion/styled/macro'
+import { jsx, css, Global, keyframes } from '@emotion/react/macro'
+import backImage from "../images/img1.jpg";
 Amplify.configure(awsExports);
+
+const BackgroundSplash = styled.div`
+background: url(${backImage}) no-repeat center center fixed;
+height: 100%;
+`
+const HomePage = styled.div`
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+`
+const BackContainer = styled.body`
+
+height: 100%;
+`
 function Landing({signOut, user}) {
   const [dataB, setData] = useState([]);
   // useEffect(()=>{
@@ -26,14 +44,24 @@ function Landing({signOut, user}) {
   return (
       <>
         <ButtonAppBar/>
-        <Authenticator>
-        {({ signOut, user }) => (
-        <main>
-          <h1>Hello {user.username}</h1>
-          <button onClick={signOut}>Sign out</button>
-        </main>
-      )}
-        </Authenticator>
+
+            <BackgroundSplash>
+            {({ signOut, user }) => (
+                <HomePage>
+                  <h1>Hello {user.username}</h1>
+                  <button onClick={signOut}>Sign out</button>
+                </HomePage>
+                )}
+
+                <Authenticator className="auth"></Authenticator>
+            </BackgroundSplash>
+            
+       
+
+
+
+       
+
 
         
  
