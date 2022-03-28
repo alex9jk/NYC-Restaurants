@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -8,6 +8,8 @@ import Home from "./containers/Home";
 import PrivateRoute from "./PrivateRoute"
 import Landing from "./containers/Landing"
 import ImageCarousel from "./components/utils/ImageCarousel";
+import Rest from "./containers/Rest"
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
@@ -16,7 +18,7 @@ ReactDOM.render(
         {/* <Route path="/home" element={<Home/>}>
         
         </Route> */}
-        <Route path="/restaurants" element= {<ImageCarousel />} />
+        <Route path="/restaurants" element= {<Rest />} />
         <Route path="/map"
           element={
             <PrivateRoute>

@@ -8,18 +8,15 @@ import awsExports from '../aws-exports';
 import styled from '@emotion/styled/macro'
 import { jsx, css, Global, keyframes } from '@emotion/react/macro'
 import backImage from "../images/img1.jpg";
+import Home from "./Home"
 Amplify.configure(awsExports);
 
 const BackgroundSplash = styled.div`
 background: url(${backImage}) no-repeat center center fixed;
 height: 100%;
 `
-const HomePage = styled.div`
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-`
+
+
 const BackContainer = styled.body`
 
 height: 100%;
@@ -44,16 +41,18 @@ function Landing({signOut, user}) {
   return (
       <>
         <ButtonAppBar/>
+        <BackgroundSplash>
+                <Authenticator className="auth">
+                {({ signOut, user }) => (
+                    <Home signOut={signOut} user={user}/>
 
-            <BackgroundSplash>
-            {({ signOut, user }) => (
-                <HomePage>
-                  <h1>Hello {user.username}</h1>
-                  <button onClick={signOut}>Sign out</button>
-                </HomePage>
                 )}
+                </Authenticator>
 
-                <Authenticator className="auth"></Authenticator>
+            
+
+
+                
             </BackgroundSplash>
             
        
